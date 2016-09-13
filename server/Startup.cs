@@ -31,11 +31,10 @@ namespace netCoreApiExperiment
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment())
-            {
+            //if (env.IsDevelopment())
+            //{
                 app.UseDeveloperExceptionPage();
-            }
-            app.UseStaticFiles();
+            //}
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             app.UseMvc(routes =>
@@ -44,6 +43,8 @@ namespace netCoreApiExperiment
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
         }
 
         //Init program
@@ -58,9 +59,10 @@ namespace netCoreApiExperiment
                 .UseConfiguration(config)
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseWebRoot("public")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .Build();
+                .Build();  
 
             host.Run();
         }

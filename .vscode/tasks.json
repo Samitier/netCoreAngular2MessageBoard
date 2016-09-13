@@ -1,18 +1,25 @@
 {
     "version": "0.1.0",
-    "command": "dotnet",
     "isShellCommand": true,
-    /*"args": ["watch"],*/
-    "args": [],
+    "showOutput": "always",
+    "suppressTaskName": true,
+    "linux": { "command": "sh", "args": ["-c"] },
+    "osx": { "command": "sh", "args": ["-c"] },
+    "windows": { "command": "cmd", "args": ["/C"] },
     "tasks": [
         {
-            "taskName": "build",
-            "args": [
-                "${workspaceRoot}\\project.json"
-            ],
-            "isBuildCommand": true,
-            "isWatching": true,
-            "problemMatcher": "$msCompile"
+            "taskName": "dotnet build",
+            "args": ["cd server && dotnet build"],
+            "isBuildCommand": true
+        },
+        {
+            "taskName": "dotnet watch run",
+            "args": ["cd server && dotnet watch run"],
+            "isWatching": true
+        },
+        {
+            "taskName": "dotnet run",
+            "args": ["cd server && dotnet run"]
         }
     ]
 }
