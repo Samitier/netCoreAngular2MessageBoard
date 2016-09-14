@@ -20,7 +20,7 @@ plugins.push(new ExtractTextPlugin("bundle.css", {
 }));
 
 plugins.push(new HtmlWebpackPlugin({
-    template: './webpack-bundles/index-template.html',
+    template: './index.html',
     hash: true
 }));
 
@@ -31,7 +31,7 @@ module.exports = {
         app:       "./webpack-bundles/app-bundle",
     },
     output:  {
-        path:       __dirname + "/../public",
+        path:       __dirname + "/../server/public",
         publicPath: '/',
         filename:   "[name].js"
     },
@@ -42,11 +42,16 @@ module.exports = {
     module:  {
         loaders: [
             {
-                test: /\.ts/, loaders: ['ts-loader'], exclude: /node_modules/
+                test: /\.ts/, 
+                loaders: ['ts-loader'], 
+                exclude: /node_modules/
             },
             {
                 test:   /\.css$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader?minimize!")
+                //test:   /\.less$/,
+                //loader: "style!css!less?minimize!",
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader?minimize!"),
+                exclude: /node_modules/
             }
         ]
     }

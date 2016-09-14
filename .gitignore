@@ -232,3 +232,11 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+#Project-specific
+typings/
+server/public/index.html
+server/public/bundle.css
+server/public/app.js
+server/public/polyfills.js
+server/public/vendor.js
