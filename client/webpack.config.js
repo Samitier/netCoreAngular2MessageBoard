@@ -35,6 +35,7 @@ module.exports = {
         publicPath: '/',
         filename:   "[name].js"
     },
+    devtool: 'source-map',
     resolve: {
         extensions: ['', '.js', '.ts']
     },

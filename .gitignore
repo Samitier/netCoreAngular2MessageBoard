@@ -240,3 +240,5 @@ server/public/bundle.css
 server/public/app.js
 server/public/polyfills.js
 server/public/vendor.js
+
+*.map
