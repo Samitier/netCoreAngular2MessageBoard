@@ -10,7 +10,7 @@
             "args": [],
             "cwd": "${workspaceRoot}/server",
             "stopAtEntry": false,
-            "externalConsole": false,
+            "externalConsole": false
         },
         {
             "name": ".NET Core Launch (web)",

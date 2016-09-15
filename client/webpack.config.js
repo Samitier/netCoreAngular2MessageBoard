@@ -49,10 +49,11 @@ module.exports = {
             },
             {
                 test:   /\.css$/,
-                //test:   /\.less$/,
-                //loader: "style!css!less?minimize!",
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader?minimize!"),
-                exclude: /node_modules/
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader"),
+            },
+            {
+                test:   /\.less$/,
+                loader: ExtractTextPlugin.extract("style-loader","css-loader!less-loader"),
             }
         ]
     }
