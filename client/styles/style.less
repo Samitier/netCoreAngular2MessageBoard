@@ -2,6 +2,7 @@
 
 
 /* ////////////// BOX SIZING FIX //////////////// */
+
 html {
   box-sizing: border-box;
 }
@@ -16,14 +17,21 @@ html, body {
   overflow: hidden;
 }
 
-/* ////////////// HEADINGS //////////// */
+/* ////////////// HEADINGS & TYPOGRAPHY //////////// */
+
+body {
+  font-family: 'Raleway', sans-serif;
+}
 
 h1,h2,h3,h4,h5 {
   font-family: 'Scope One', serif;
-    font-weight: 400;
+  font-weight: 400;
+  margin: 0px;
 }
+h1 { font-size: 44px }
+h2 { font-size: 27px }
 
-/* ///////////// MAIN LAYOUT ////////// */
+/* ///////////// MAIN LAYOUT - Board ////////// */
 
 #board {
   background-color: #20B2AA;
@@ -39,6 +47,7 @@ h1,h2,h3,h4,h5 {
     width: 100%;
     height: 100%;
     z-index: 2;
+    pointer-events: none;
     content: "";
   }
 }
@@ -55,16 +64,33 @@ h1,h2,h3,h4,h5 {
   animation: fadeInAnim 1.5s 0.5s forwards;
 }
 #main-logo {
-  font-size: 44px;
-  color:white;
-  border-top: 3px solid white;
-  border-bottom: 3px solid white;
+  color:#79fcf4;
+  border-top: 3px solid #79fcf4;
+  border-bottom: 3px solid #79fcf4;
   >small {
       font-size:40%;
       display:block;
       margin-top: -10px;
       margin-bottom: 3px;
   }
+}
+
+/* ///////////// MAIN LAYOUT - Message ////////// */
+
+.message {
+  position: absolute;
+  top: 0;
+  left:0;
+  background-color: #feffe5;
+  padding: 1em;
+  z-index:3;
+  max-width: 20em;
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.35);
+  animation: scaleInAnim 0.5s forwards;
+}
+.message-body {
+  margin:0px;
+  text-align:justify;
 }
 
 /* ////////////////// UTILS /////////////// */
@@ -76,4 +102,9 @@ h1,h2,h3,h4,h5 {
 @keyframes fadeInAnim {
   from { opacity: 0}
   to { opacity: 1}
+}
+
+@keyframes scaleInAnim {
+  from { transform: scale(0) }
+  to { transform: scale(1) }
 }
