@@ -6,6 +6,7 @@ import { Directive, ElementRef, HostListener, Input, Renderer, OnInit } from '@a
 export class DraggableItemDirective implements OnInit{
     @Input('draggable-item') onFinishCallback: Function;
     dragging:boolean = false;
+    moved: boolean = false;
     offsetX: number = 0;
     offsetY: number = 0;
 
@@ -29,10 +30,11 @@ export class DraggableItemDirective implements OnInit{
         if(this.dragging) {
             this._renderer.setElementStyle(this._elem.nativeElement, "top", event.y - this.offsetY +"px");
             this._renderer.setElementStyle(this._elem.nativeElement, "left", event.x - this.offsetX +"px");
+            this.moved = true;
         }
     }
     @HostListener('document:mouseup',  ['$event']) onMouseUp(event) {
-        if(this.dragging) this.onFinishCallback();
-        this.dragging = false;
+        if(this.dragging && this.moved) this.onFinishCallback();
+        this.dragging = this.moved = false;
     }
 }

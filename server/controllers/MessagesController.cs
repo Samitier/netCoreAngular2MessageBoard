@@ -11,9 +11,9 @@ namespace netCoreApiExperiment.Controllers
         public List<object> Get()
         {
             return new List<object> { 
-                new {id = "1", title = "Hello World!", body = "This is the first message from the api!", x = "10" , y = "10"},
-                new {id = "2", title = "Long note", body = "This is another note, with more text to see how does it fit the screen!", x = "700" , y = "100"},
-                new {id = "3", title = "Goodbye World!", body = "This is the last message from the api!", x = "500" , y = "400"},
+                new {id = "1", title = "Hello World!", body = "This is the first message from the api!", x = 10 , y = 10, rotation=1},
+                new {id = "2", title = "Long note", body = "This is another note, with more text to see how does it fit the screen!", x = 700 , y = 100, rotation=3},
+                new {id = "3", title = "Goodbye World!", body = "This is the last message from the api!", x = 500 , y = 400, rotation=-2},
             };
         }
 
