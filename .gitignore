@@ -242,3 +242,4 @@ server/public/polyfills.js
 server/public/vendor.js
 
 *.map
+server/appsettings.json
