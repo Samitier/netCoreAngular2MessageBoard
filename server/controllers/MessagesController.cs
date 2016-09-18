@@ -32,14 +32,18 @@ namespace netCoreApiExperiment.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok(await _db.Messages.FirstOrDefaultAsync(a => a.id == id));
+            Message message = await _db.Messages.FirstOrDefaultAsync(a => a.id == id);
+            if(message != null) return Ok(message);
+            else return NotFound();
         }
 
         // POST api/messages
         [HttpPost]
-        public IActionResult Post([FromBody]Message message)
+        public async Task<IActionResult> Post([FromBody]Message message)
         {
             if(ModelState.IsValid) {
+                _db.Messages.Add(message);
+                await _db.SaveChangesAsync();
                 return Ok(message);
             }
             else return BadRequest();
@@ -47,8 +51,16 @@ namespace netCoreApiExperiment.Controllers
 
         // PUT api/messages/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put(int id, [FromBody]Message message)
         {
+            if (ModelState.IsValid)
+            {
+                if (!await _db.Messages.AnyAsync(a => a.id == id)) return NotFound();
+                _db.Messages.Update(message);
+                await _db.SaveChangesAsync();
+                return Ok(message);
+            }
+            else return BadRequest();
         }
 
         // DELETE api/messages/5

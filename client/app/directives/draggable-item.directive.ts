@@ -34,7 +34,12 @@ export class DraggableItemDirective implements OnInit{
         }
     }
     @HostListener('document:mouseup',  ['$event']) onMouseUp(event) {
-        if(this.dragging && this.moved) this.onFinishCallback();
+        if(this.dragging && this.moved) {
+            this.onFinishCallback({
+                x: event.x - this.offsetX, 
+                y: event.y - this.offsetY
+            });
+        }
         this.dragging = this.moved = false;
     }
 }

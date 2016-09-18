@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GlobalVarsService } from '../services/global-vars.service.ts';
+import { WebApiService } from '../services/web-api.service.ts';
 
 @Component({
     selector:   'message-item',
     template:   `
-        <div class="message-container" [style.top]="message.y+'px'" [style.left]="message.x+'px'" [style.transform]="rotation | safe" [draggable-item]='updateMessage'>
+        <div class="message-container" [style.top]="message.y+'px'" [style.left]="message.x+'px'" [style.transform]="rotation | safe" [draggable-item]='updateMessagePosition'>
             <article class="message" [style.animation]="appearAnimation">
                 <header class="message-header">
                     <h2>{{message.title}}</h2>
@@ -24,7 +25,8 @@ export class MessageComponent implements OnInit {
     rotation: string = "";
 
     constructor ( 
-        private _globals: GlobalVarsService
+        private _globals: GlobalVarsService,
+        private _webApiService: WebApiService
     ){}
 
     ngOnInit() {
@@ -33,7 +35,11 @@ export class MessageComponent implements OnInit {
         if(typeof this.message.rotation == 'number') this.rotation = `rotateZ(${this.message.rotation}deg)`; 
     }
 
-    updateMessage() {
-        console.log("Message updated!");
+    updateMessagePosition(newPosition) {
+        console.log(newPosition, this.message);
+        
+        //this.message.x = newPosition.x;
+        //this.message.y = newPosition.y;
+        //this._webApiService.putMessage(this.message); 
     }
 }
