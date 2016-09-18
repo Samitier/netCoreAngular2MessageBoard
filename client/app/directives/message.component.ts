@@ -4,7 +4,7 @@ import { GlobalVarsService } from '../services/global-vars.service.ts';
 @Component({
     selector:   'message-item',
     template:   `
-        <article class="message" [style.top]="message.y+'px'" [style.left]="message.x+'px'" [style.animation]="appearAnimation">
+        <article class="message" [style.top]="message.y+'px'" [style.left]="message.x+'px'" [style.animation]="appearAnimation" [draggable-item]='updateMessage'>
             <header class="message-header">
                 <h2>{{message.title}}</h2>
             </header>
@@ -27,5 +27,9 @@ export class MessageComponent implements OnInit {
     ngOnInit() {
         let delay = (Math.random()*this._globals.timeOfRefresh).toFixed(2);
         this.appearAnimation = `scaleInAnim 0.5s ${delay}s forwards`; 
+    }
+
+    updateMessage() {
+        console.log("Message updated!");
     }
 }
