@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { GlobalVarsService } from '../services/global-vars.service.ts';
 
 @Component({
     selector:   'message-item',
     template:   `
-        <article class="message" [style.top]="message.y+'px'" [style.left]="message.x+'px'">
+        <article class="message" [style.top]="message.y+'px'" [style.left]="message.x+'px'" [style.animation]="appearAnimation">
             <header class="message-header">
                 <h2>{{message.title}}</h2>
             </header>
@@ -15,6 +16,16 @@ import { Component, Input } from '@angular/core';
 })
 
 
-export class MessageComponent {
+export class MessageComponent implements OnInit {
     @Input() message:Object;
+    appearAnimation: string = "";
+
+    constructor ( 
+        private _globals: GlobalVarsService
+    ){}
+
+    ngOnInit() {
+        let delay = (Math.random()*this._globals.timeOfRefresh).toFixed(2);
+        this.appearAnimation = `scaleInAnim 0.5s ${delay}s forwards`; 
+    }
 }

@@ -5,6 +5,7 @@ import { HttpModule }    from '@angular/http';
 import { AppComponent } from './app.component';
 import { MessageComponent } from './directives/message.component.ts'; 
 
+import { GlobalVarsService } from './services/global-vars.service.ts';
 import { AppHttpService } from './services/app-http.service.ts';
 import { WebApiService } from './services/web-api.service.ts';
 
@@ -19,6 +20,7 @@ import { WebApiService } from './services/web-api.service.ts';
     MessageComponent
   ],
   providers: [
+    GlobalVarsService,
     AppHttpService,
     WebApiService  
   ],
