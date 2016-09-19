@@ -2,13 +2,13 @@ namespace netCoreApiExperiment.Models
 {
     public class Message
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         
-        public string title { get; set; }
-        public string body { get; set; }
+        public string Title { get; set; }
+        public string Body { get; set; }
         
-        public int x { get; set; }
-        public int y { get; set; }
-        public int rotation { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Rotation { get; set; } 
     } 
 }

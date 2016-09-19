@@ -1,10 +1,12 @@
-import { Directive, ElementRef, HostListener, Input, Renderer, OnInit } from '@angular/core';
+import { Directive, ElementRef, HostListener, Output, Renderer, OnInit, EventEmitter } from '@angular/core';
 
 @Directive({ 
     selector: '[draggable-item]' 
 })
 export class DraggableItemDirective implements OnInit{
-    @Input('draggable-item') onFinishCallback: Function;
+
+    @Output() onDrop = new EventEmitter<Object>();
+
     dragging:boolean = false;
     moved: boolean = false;
     offsetX: number = 0;
@@ -35,7 +37,7 @@ export class DraggableItemDirective implements OnInit{
     }
     @HostListener('document:mouseup',  ['$event']) onMouseUp(event) {
         if(this.dragging && this.moved) {
-            this.onFinishCallback({
+            this.onDrop.emit({
                 x: event.x - this.offsetX, 
                 y: event.y - this.offsetY
             });

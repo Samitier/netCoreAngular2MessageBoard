@@ -5,7 +5,7 @@ import { WebApiService } from '../services/web-api.service.ts';
 @Component({
     selector:   'message-item',
     template:   `
-        <div class="message-container" [style.top]="message.y+'px'" [style.left]="message.x+'px'" [style.transform]="rotation | safe" [draggable-item]='updateMessagePosition'>
+        <div class="message-container" [style.top]="message.y+'px'" [style.left]="message.x+'px'" [style.transform]="rotation | safe" draggable-item (onDrop)="updatePosition($event)">
             <article class="message" [style.animation]="appearAnimation">
                 <header class="message-header">
                     <h2>{{message.title}}</h2>
@@ -35,11 +35,9 @@ export class MessageComponent implements OnInit {
         if(typeof this.message.rotation == 'number') this.rotation = `rotateZ(${this.message.rotation}deg)`; 
     }
 
-    updateMessagePosition(newPosition) {
-        console.log(newPosition, this.message);
-        
-        //this.message.x = newPosition.x;
-        //this.message.y = newPosition.y;
-        //this._webApiService.putMessage(this.message); 
+    updatePosition(newPosition) {        
+        this.message.x = newPosition.x;
+        this.message.y = newPosition.y;
+        this._webApiService.putMessage(this.message); 
     }
 }
