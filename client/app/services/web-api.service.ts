@@ -19,11 +19,11 @@ export class WebApiService {
        return this._http.put(this._apiUrl + 'messages' + "/" + message.id, message); 
     }
 
-    postMessage() { 
-        
+    postMessage(message) { 
+       return this._http.post(this._apiUrl + 'messages', message); 
     }
 
     deleteMessage(id) { 
-        
+
     }
 }

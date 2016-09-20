@@ -5,8 +5,8 @@ import { GlobalVarsService } from './services/global-vars.service.ts';
 @Component({
   selector: 'main-app',
   template: `
-    <message-item *ngFor="let message of messages" [message]="message"></message-item>
-    <button id="btn-add-message" class="noselect" (click)="addNewMessage()">Add</button>
+    <message-item *ngFor="let message of messages" [message]="message" (onMessageCreated)="onMessageCreated()"></message-item>
+    <button id="btn-add-message" class="noselect" (click)="addNewMessage($event)">Add</button>
     <div class="black-overlay" [class.invisible]="!isCreating" (click)="exitEditing()"></div>
   `
 })
@@ -25,13 +25,14 @@ export class AppComponent implements OnInit {
     this._webApiService.getMessages().then( messages => this.messages = messages);
   }
 
-  addNewMessage() {
+  addNewMessage(event) {
+    
     this.isCreating = true;
     this.messageCreated = {
       title: "",
       body: "",
-      x: 0,
-      y: 0,
+      x: event.x - this._globals.offsetLeft,
+      y: event.y - this._globals.offsetTop,
       rotation: Math.round(this._globals.maxMessageRotation * 2 * Math.random()) - this._globals.maxMessageRotation,
       isCreating: true
     };    
@@ -43,5 +44,9 @@ export class AppComponent implements OnInit {
       this.isCreating = false;
       this.messages.splice(this.messages.length - 1, 1);  
     }
+  }
+
+  onMessageCreated(){
+    this.isCreating = false;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { GlobalVarsService } from '../services/global-vars.service.ts';
 import { WebApiService } from '../services/web-api.service.ts';
 
@@ -6,17 +6,18 @@ import { WebApiService } from '../services/web-api.service.ts';
     selector:   'message-item',
     template:   `
         <div class="message-container" [style.top]="message.y+'px'" [style.left]="message.x+'px'" [style.z-index]="message.isCreating ? 4 : 1"
-        [style.transform]="rotation | safe" draggable-item (onDrop)="updatePosition($event)">
+        [style.transform]="rotation | safe" draggable-item (onDrop)="onUpdatePosition($event)">
             <article class="message" [style.animation]="appearAnimation">
                 <header class="message-header">
                     <h2>
                         <span  [class.hidden]="message.isCreating">{{message.title}}</span>
-                        <input [class.hidden]="!message.isCreating" type="text" placeholder="Title">
+                        <input [class.hidden]="!message.isCreating" type="text" placeholder="Title" [(ngModel)]="message.title">
                     </h2>
                 </header>
                 <p class="message-body">
-                    <textarea [class.hidden]="!message.isCreating" type="text" placeholder="Write a body and press enter to save this message."></textarea>
-                    <span  [class.hidden]="message.isCreating">{{message.body}}</span>
+                    <textarea [class.hidden]="!message.isCreating" type="text" placeholder="Write a body and press enter to save this message." 
+                     [(ngModel)]="message.body" (keyup.enter)=onSendMessage()></textarea>
+                    <span [class.hidden]="message.isCreating">{{message.body}}</span>
                 </p>
             </article>
         </div>   
@@ -26,6 +27,8 @@ import { WebApiService } from '../services/web-api.service.ts';
 
 export class MessageComponent implements OnInit {
     @Input() message:any;
+    @Output() onMessageCreated =  new EventEmitter<Object>();
+
     appearAnimation: string = "";
     rotation: string = "";
 
@@ -42,9 +45,20 @@ export class MessageComponent implements OnInit {
         if(typeof this.message.rotation == 'number') this.rotation = `rotateZ(${this.message.rotation}deg)`; 
     }
 
-    updatePosition(newPosition) {        
-        this.message.x = newPosition.x;
-        this.message.y = newPosition.y;
-        this._webApiService.putMessage(this.message); 
+    onUpdatePosition(newPosition) {    
+        if(!this.message.isCreating) {
+            this.message.x = newPosition.x;
+            this.message.y = newPosition.y;
+            this._webApiService.putMessage(this.message);
+        }     
     }
+    
+    onSendMessage() {
+        if(this.message.isCreating) {
+            this._webApiService.postMessage(this.message).then(response => this.message = response);
+            this.onMessageCreated.emit();
+            this.message.isCreating = false;
+        }
+    }
+
 }

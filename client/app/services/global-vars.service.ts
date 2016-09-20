@@ -9,4 +9,8 @@ export class GlobalVarsService {
 
     //Maximum rotation of a message on the board (in deg)
     public maxMessageRotation = 14;
+
+    //message offset from creation button
+    public offsetLeft = 160;
+    public offsetTop = 190;
 }
