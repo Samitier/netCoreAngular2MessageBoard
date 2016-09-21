@@ -11,12 +11,12 @@ import { WebApiService } from '../services/web-api.service.ts';
                 <header class="message-header">
                     <h2>
                         <span  [class.hidden]="message.isCreating">{{message.title}}</span>
-                        <input [class.hidden]="!message.isCreating" type="text" placeholder="Title" [(ngModel)]="message.title">
+                        <input [class.hidden]="!message.isCreating" type="text" placeholder="Title" [(ngModel)]="message.title" required>
                     </h2>
                 </header>
                 <p class="message-body">
                     <textarea [class.hidden]="!message.isCreating" type="text" placeholder="Write a body and press enter to save this message." 
-                     [(ngModel)]="message.body" (keyup.enter)=onSendMessage()></textarea>
+                     [(ngModel)]="message.body" (keyup.enter)=onSendMessage() required></textarea>
                     <span [class.hidden]="message.isCreating">{{message.body}}</span>
                 </p>
             </article>
@@ -27,10 +27,11 @@ import { WebApiService } from '../services/web-api.service.ts';
 
 export class MessageComponent implements OnInit {
     @Input() message:any;
-    @Output() onMessageCreated =  new EventEmitter<Object>();
+    @Output() onMessageCreated =  new EventEmitter<boolean>();
 
     appearAnimation: string = "";
     rotation: string = "";
+    isSending: boolean = false;
 
     constructor ( 
         private _globals: GlobalVarsService,
@@ -54,9 +55,15 @@ export class MessageComponent implements OnInit {
     }
     
     onSendMessage() {
-        if(this.message.isCreating) {
-            this._webApiService.postMessage(this.message).then(response => this.message = response);
-            this.onMessageCreated.emit();
+        if(this.message.isCreating && !this.isSending) {
+            this.isSending = true;
+            this._webApiService.postMessage(this.message).then(response => {
+                this.message = response;
+                this.onMessageCreated.emit(true);
+                this.isSending = false;
+            }).catch( error => {
+                this.onMessageCreated.emit(false);
+            });
             this.message.isCreating = false;
         }
     }
