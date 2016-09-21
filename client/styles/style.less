@@ -129,6 +129,27 @@ h2 { font-size: 27px }
     }
   }
 
+  .footer {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    font-size: 12px;
+    padding: 1em;
+    font-weight: bold;
+    >a {
+      color:black;
+      text-decoration:none;
+      >img {
+        width:13px;
+        float:left;
+      }
+      &:hover { 
+        opacity: 0.7;
+        >img { opacity:0.7 }
+      }
+    }
+  }
+
 /* ///////////// MAIN LAYOUT - Message ////////// */
 
 .message-container {
