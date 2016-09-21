@@ -19,20 +19,13 @@ namespace netCoreApiExperiment.Controllers
         public async Task<IActionResult> Get()
         {
             return Ok(await _db.Messages.ToListAsync());
-            /*
-            return new List<object> { 
-                new {id = "1", title = "Hello World!", body = "This is the first message from the api!", x = 10 , y = 10, rotation=1},
-                new {id = "2", title = "Long note", body = "This is another note, with more text to see how does it fit the screen!", x = 700 , y = 100, rotation=3},
-                new {id = "3", title = "Goodbye World!", body = "This is the last message from the api!", x = 500 , y = 400, rotation=-2},
-            };
-            */
         }
 
         // GET api/messages/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            Message message = await _db.Messages.FirstOrDefaultAsync(a => a.id == id);
+            Message message = await _db.Messages.FirstOrDefaultAsync(a => a.Id == id);
             if(message != null) return Ok(message);
             else return NotFound();
         }
@@ -55,7 +48,7 @@ namespace netCoreApiExperiment.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!await _db.Messages.AnyAsync(a => a.id == id)) return NotFound();
+                if (!await _db.Messages.AnyAsync(a => a.Id == id)) return NotFound();
                 _db.Messages.Update(message);
                 await _db.SaveChangesAsync();
                 return Ok(message);
@@ -65,8 +58,16 @@ namespace netCoreApiExperiment.Controllers
 
         // DELETE api/messages/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            Message message = await _db.Messages.FirstOrDefaultAsync(a => a.Id == id);
+            if (message == null) return NotFound();
+            else
+            {
+                _db.Messages.Remove(message);
+                await _db.SaveChangesAsync();
+                return Ok(message);
+            }
         }
     }
 }

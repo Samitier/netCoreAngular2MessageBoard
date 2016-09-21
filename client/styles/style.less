@@ -11,10 +11,25 @@ html {
   box-sizing: inherit;
 }
 
+/* ////////////// GENERAL STYLES //////////////////// */
+
 html, body {
   margin: 0px;
   height:100%;
   overflow: hidden;
+}
+
+input, textarea {
+  background-color: transparent;
+  border-style: none;
+  border:none!important;
+  border-bottom: 1px solid black!important;
+  outline: none;
+  width:100%;
+  resize: none;
+}
+textarea::-webkit-resizer {
+  display:none;
 }
 
 /* ////////////// HEADINGS & TYPOGRAPHY //////////// */
@@ -76,6 +91,44 @@ h2 { font-size: 27px }
   }
 }
 
+.black-overlay {
+  background-color:rgba(0,0,0,0.5);
+  opacity:1;
+  top:0px;
+  bottom:0px;
+  left:0px;
+  right:0px;
+  position:absolute;
+  z-index:3;
+  transition: all 1s;
+  visibility: visible;
+}
+
+#btn-add-message {
+    position: absolute;
+    z-index: 2;
+    bottom: 2rem;
+    background-color: lightseagreen;
+    left: 50%;
+    margin-left: -1.4rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    border: 2px solid white;
+    border-radius: 50%;
+    font-size: 14px;
+    line-height: 0.1;
+    color: white;
+    outline:none;
+    transition:all 0.5s;
+    cursor:pointer;
+    opacity:0;
+    animation: fadeInAnim 1.5s 1s forwards;
+    &:hover {
+      color: lightseagreen;
+      background-color: white;
+    }
+  }
+
 /* ///////////// MAIN LAYOUT - Message ////////// */
 
 .message-container {
@@ -89,6 +142,8 @@ h2 { font-size: 27px }
   padding: 1em;
   z-index:3;
   max-width: 20em;
+  min-width: 13em;
+  min-height: 6em;
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.35);
   transform: scale(0);
 }
@@ -96,6 +151,14 @@ h2 { font-size: 27px }
 .message-body {
   margin:0px;
   text-align:justify;
+  textarea { padding-top:1em; }
+}
+
+.message-header {
+  input { 
+    border-bottom: 1px solid black;
+    width:85%;
+  }
 }
 
 /* ////////////////// UTILS /////////////// */
@@ -110,6 +173,13 @@ h2 { font-size: 27px }
   -ms-user-select: none;       
   user-select: none;   
   cursor:default;        
+}
+.hidden {
+  display:none;
+}
+.invisible {
+  opacity:0;
+  visibility: hidden;
 }
 
 /* ///////////////// ANIMATIONS ////////////// */

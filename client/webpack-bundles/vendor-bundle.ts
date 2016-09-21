@@ -4,7 +4,7 @@ declare var $:any;
 
 require("../styles/style.less");
 
-window.$ = window.jQuery = require('jquery');
+//window.$ = window.jQuery = require('jquery');
 //require("../node_modules/bootstrap/dist/js/bootstrap.min.js");
 
 import '@angular/platform-browser';

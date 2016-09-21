@@ -1,14 +1,22 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace netCoreApiExperiment.Models
 {
     public class Message
     {
-        public int id { get; set; }
-        
-        public string title { get; set; }
-        public string body { get; set; }
-        
-        public int x { get; set; }
-        public int y { get; set; }
-        public int rotation { get; set; }
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        [MaxLength(19),MinLength(1)]
+        public string Title { get; set; }
+        [Required]
+        [MaxLength(210),MinLength(1)]
+        public string Body { get; set; }
+        [Required]
+        public int X { get; set; }
+        [Required]
+        public int Y { get; set; }
+        [Required]
+        public int Rotation { get; set; } 
     } 
 }
