@@ -235,11 +235,7 @@ _Pvt_Extensions
 
 #Project-specific
 typings/
-server/public/index.html
-server/public/bundle.css
-server/public/app.js
-server/public/polyfills.js
-server/public/vendor.js
+.vscode
 
 *.map
 server/appsettings.json
