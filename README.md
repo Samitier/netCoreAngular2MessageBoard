@@ -1,4 +1,4 @@
-# Welcome to a .NET Core & Angular2 experiment
+# Welcome to a .NET Core & Angular2 message board
 
 This application is just an excuse to test some features I found very interesting about this 2 brand new frameworks. You can find the final result [here](http://samitier.azurewebsites.net/).
 
